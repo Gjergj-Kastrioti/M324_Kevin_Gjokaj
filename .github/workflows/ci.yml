@@ -1,0 +1,40 @@
+name: M324 CI Pipeline # Custom name
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  validate-code: # Custom job name
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm' # Optional: Speeds up build by caching dependencies
+
+      - name: Install dependencies
+        # Improvement: 'npm ci' is better than 'npm install' for CI (see explanation below)
+        run: npm ci
+
+      - name: Run Linter
+        run: npm run lint
+        # 'continue-on-error' or 'if: always()' allows subsequent steps to run even if this fails
+        # However, standard CI usually stops on first failure.
+        # To run ALL checks even if one fails (Task Requirement):
+        if: always() 
+
+      - name: Check Formatting
+        # Note: We use '--check' so it fails if code is ugly. 
+        # If you use 'npm run format' (which does --write), it will always pass!
+        run: npx prettier --check .
+        if: always()
+
+      - name: Run Tests
+        run: npm run test
+        if: always()
