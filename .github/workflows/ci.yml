@@ -23,6 +23,7 @@ jobs:
         with:
           node-version: '20.x'
           cache: 'npm'
+          cache-dependency-path: ./task5/package-lock.json
 
       # OPTIMIERUNG: npm ci statt npm install
       # npm ci nutzt die package-lock.json für eine exakte, saubere und schnellere Installation
