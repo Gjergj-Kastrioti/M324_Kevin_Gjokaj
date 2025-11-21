@@ -1,4 +1,4 @@
-name: M324 CI Pipeline # Custom name
+name: M324 CI Pipeline
 
 on:
   pull_request:
@@ -6,11 +6,13 @@ on:
       - main
 
 jobs:
-  validate-code: # Custom job name
+  validate-code:
     runs-on: ubuntu-latest
+    
     defaults:
-          run:
-            working-directory: ./Task2
+      run:
+        working-directory: ./Task2
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -19,22 +21,19 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20.x'
-          cache: 'npm' # Optional: Speeds up build by caching dependencies
+          cache: 'npm'
+          # Important: Tell the cache step where the lock file is too
+          cache-dependency-path: ./Task2/package-lock.json 
 
       - name: Install dependencies
-        # Improvement: 'npm ci' is better than 'npm install' for CI (see explanation below)
-        run: npm ci
+        run: npm ci 
+        # Thanks to 'defaults' above, this now runs in ./Task2/
 
       - name: Run Linter
         run: npm run lint
-        # 'continue-on-error' or 'if: always()' allows subsequent steps to run even if this fails
-        # However, standard CI usually stops on first failure.
-        # To run ALL checks even if one fails (Task Requirement):
-        if: always() 
+        if: always()
 
       - name: Check Formatting
-        # Note: We use '--check' so it fails if code is ugly. 
-        # If you use 'npm run format' (which does --write), it will always pass!
         run: npx prettier --check .
         if: always()
 
