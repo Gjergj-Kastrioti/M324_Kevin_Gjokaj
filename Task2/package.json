@@ -5,7 +5,8 @@
   "scripts": {
     "lint": "eslint .",
     "format": "prettier --write .",
-    "test": "node --experimental-vm-modules node_modules/mocha/bin/mocha ./"
+    "test": "node --experimental-vm-modules node_modules/mocha/bin/mocha ./",
+    "start": "npm run format && npm run lint && npm run test && node index.js"
   },
   "type": "module",
   "keywords": [],
