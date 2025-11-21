@@ -1,6 +1,4 @@
-     export const sum = (a, b) => {
-  return a + b + 1
+export const sum = (a, b) => {
+  return a + b
 }
 console.log(sum(1, 2))
-
-const unused = 5;
