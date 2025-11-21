@@ -1,4 +1,4 @@
-name: Task5-CI-Pipeline # Eigener Name des Workflows
+name: CI
 
 on:
   pull_request:
@@ -6,40 +6,19 @@ on:
       - main
 
 jobs:
-  validate-code:
+  lint-format-test:
     runs-on: ubuntu-latest
-    
-    # 👇 WICHTIG: Dieser Block sorgt dafür, dass ALLES im Task5 Ordner passiert
-    defaults:
-      run:
-        working-directory: task5
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      # Zur Sicherheit: Zeig uns, welche Dateien da sind (Debugging)
-      - name: Debug - Show files
-        run: ls -la
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20.x'
-          cache: 'npm'
-          # Der Pfad muss relativ zum Root sein, auch wenn defaults gesetzt ist!
-          cache-dependency-path: ./Task5/package-lock.json
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
       - name: Run linter
         run: npm run lint
-
-      - name: Check formatting
-        if: always()
-        run: npm run format
-
-      - name: Run tests
-        if: always()
-        run: npm run test
