@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "format": "prettier --write ."
   },
   "type": "module",
   "keywords": [],
@@ -16,5 +17,8 @@
     "eslint": "^9.39.1",
     "globals": "^16.5.0",
     "typescript-eslint": "^8.47.0"
+  },
+  "dependencies": {
+    "prettier": "^3.6.2"
   }
 }
