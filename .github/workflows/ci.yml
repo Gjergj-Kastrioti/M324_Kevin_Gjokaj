@@ -12,7 +12,7 @@ jobs:
     # 👇 WICHTIG: Dieser Block sorgt dafür, dass ALLES im Task5 Ordner passiert
     defaults:
       run:
-        working-directory: /Task5
+        working-directory: task5
 
     steps:
       - name: Checkout code
