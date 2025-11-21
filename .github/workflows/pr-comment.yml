@@ -1,0 +1,19 @@
+name: PR Welcome Message
+on:
+  pull_request:
+    types: [opened] # Only run when first opened, not on every commit
+
+permissions:
+  pull-requests: write # Required to post comments
+
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add comment
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          message: |
+            :wave: Hi there! 
+            Thanks for opening a PR. The CI pipeline is running to check your code. 
+            Please wait for the green light! :green_heart:
