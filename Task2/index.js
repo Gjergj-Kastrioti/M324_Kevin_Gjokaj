@@ -1,9 +1,9 @@
 // index.js
-     export const sum = (a, b) => {
-  return a + b + 1;
-};
+export const sum = (a, b) => {
+  return a + b
+}
 
-const unusedVariable = 10; // Added to trigger 'unused-vars' error
+const unusedVariable = 10 // Added to trigger 'unused-vars' error
 
-console.log(sum(1, 2));
-console.log(myUndefinedVariable); // Triggers 'no-undef'
+console.log(sum(1, 2))
+console.log(myUndefinedVariable) // Triggers 'no-undef'
