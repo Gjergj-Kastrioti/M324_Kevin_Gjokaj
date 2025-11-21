@@ -1,0 +1,42 @@
+name: Task5-CI-Pipeline # Eigener Name des Workflows
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  validate-code: # Eigener Name (statt lint-format-test)
+    runs-on: ubuntu-latest
+    
+    # Falls dein Code in einem Unterordner "Task5" liegt, entferne das Kommentarzeichen (#) unten:
+    # defaults:
+    #   run:
+    #     working-directory: ./Task5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm'
+
+      # OPTIMIERUNG: npm ci statt npm install
+      # npm ci nutzt die package-lock.json für eine exakte, saubere und schnellere Installation
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run linter
+        run: npm run lint
+
+      # ERWEITERUNG: Formatting Check
+      - name: Check formatting
+        run: npm run format 
+        # Hinweis: Falls dein Skript anders heißt (z.B. 'prettier-check'), passe es hier an.
+
+      # ERWEITERUNG: Tests ausführen
+      - name: Run tests
+        run: npm run test
